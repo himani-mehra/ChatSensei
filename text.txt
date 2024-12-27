@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Groq Chat Completion</title>
+</head>
+<body>
+    <h1>Groq Chat Completion</h1>
+    <input type="text" id="input" placeholder="Type your query here">
+    <button id="getPoem">Submit</button>
+    <pre id="output"></pre>
+
+    <script>
+        const inputEl = document.getElementById('input');
+        document.getElementById('getPoem').addEventListener('click', async () => {
+            try {
+                const userInput = inputEl.value;  // Use .value to get the input's value
+                if (!userInput) {
+                    document.getElementById('output').textContent = "Please enter a query.";
+                    return;
+                }
+
+                const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer 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',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        'messages': [
+                            {
+                                'role': 'user',
+                                'content': userInput  // Send the input value here
+                            }
+                        ],
+                        'model': 'llama3-8b-8192'
+                    })
+                });
+
+                const data = await response.json();
+                document.getElementById('output').textContent = data.choices[0]?.message?.content || "No content returned";
+            } catch (error) {
+                console.error("Error:", error);
+                document.getElementById('output').textContent = "Error fetching data.";
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+copy icon :-
+
+<div class="copy-container" onclick="copyToClipboard()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-copy" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"/>
+                </svg>
+                <span class="tooltip">Copy text</span>
+            </div> 
