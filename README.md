@@ -1,1 +1,1 @@
-# ChatSensei
+# ChatSensei , a chatbot
